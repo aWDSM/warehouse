@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+   
+</head>
+<body>
+    <!-- 7种错误类型-->
+    <!-- 1,error :错误
+    2,EvalError:全局错误 eval("("+json+")");
+    3,RangError:引用错误
+    4,ReferenceError:参数错误
+    5,Sybtax:语法错误
+    6,TypeError:类型错误
+    7,URLError:编码错误
+    encode,decode
+    错误产生的场景
+    1,语法错误:单词写错,标点符号,大小写
+    2,浏览器兼容产生的错误
+    3,没有错误提示的错误
+        执行顺序:(目标代码是否被执行)
+        图层:
+错误调试:
+alet,console.log...
+程序一旦遇到错误,js引擎就会停止执行,会产生一个错误信息.js提供了捕捉信息的方法
+try{
+    要运行的代码
+}catch(err){
+    错误处理
+    throw:自定义提示信息
+}finally{
+    无论有没有错误都执行
+} -->
+<input type="text" id="box">
+<button onclick="test()">点击</button>
+<script>
+        function test() {
+            try {
+                var phone = document.getElementById("box").value;
+                if (phone == "") {
+                    throw "输入的值为空";
+                }
+                if (isNaN(phone)) {
+                    throw "非数字";
+                }
+                if (phone > 5) {
+                    throw "值过大";
+                }
+                if (phone < 2) {
+                    throw "值过小";
+                }
+                //   alert("我被点击了");
+                // 在try中通常放错误代码
+            } catch (err) {
+                console.dir(err);
+                // 只要try里的代码产生错误的时候,catch才会执行,err里包含了常见的错误信息
+            } finally {
+                // console.log("无论有没有错都会执行的语句");
+            }
+        }
+</script>
+</body>
+</html>
