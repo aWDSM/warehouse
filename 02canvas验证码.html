@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        input{
+            height:40px;
+            width: 200px;
+            border-radius:20px;
+            outline: none;
+        }
+        canvas{
+            border:1px solid red;
+        }
+    </style>
+    <script src='https://cdn.bootcss.com/jquery/1.8.3/jquery.min.js'></script>
+</head>
+<body>
+    <input type="text" placeholder="不区分大小写">
+    <canvas id="canvas">
+        您的浏览器不支持canvas,请您升级您的浏览器
+    </canvas>
+    <br>
+    <button id="btn">提交</button>
+    <script>
+        var canvas=document.getElementById("canvas");
+        var context=canvas.getContext("2d");
+        canvas.width=100;
+        canvas.height=40;
+        function  Verify(){
+            this.init();
+        }
+        Verify.prototype={
+            constructor: Verify,
+            init:function(){
+                this.draw(); 
+                this.onclick();
+            },
+            draw:function(){
+                 this.arry = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < 4; i++) {
+                    num = parseInt(this.random(0,61));
+                    console.log(num)
+                    var x= 15 + i * 20;
+                    var c= this.color();
+                    var d= Math.random()*10*Math.PI/180;
+                    console.log(d)
+                    this.text(x,this.arry[num],c,d);
+                }
+                for (let i = 0; i < 5; i++) {
+                    this.lineFn(this.color());
+                }
+                for (let i = 0; i < 30; i++) {
+                    var rx=this.random(0,canvas.width);
+                    var ry = this.random(0,canvas.height);
+                    var rc = this.color();
+                    this.arc(rx,ry,rc)            
+                }
+            },
+            text:function(x,z,c,d){
+                context.beginPath();
+                context.font = "bold 30px 微软雅黑";
+                context.fillStyle=c;
+                context.fillText(z,x,25,canvas.height);
+                 context.rotate(d);
+                context.closePath();
+            },
+            lineFn:function(color){
+                const x= this.random(0, canvas.width)
+                const y = this.random(0, canvas.height);
+                context.beginPath();
+                context.moveTo(this.random(0,canvas.width),this.random(0,canvas.height));
+                context.lineTo(x,y);
+                context.lineWidth=2;
+                context.strokeStyle=color;
+                context.stroke();
+                context.closePath();
+            },
+            arc:function(x,y,c){
+                context.beginPath();
+                context.arc(x, y, 1, 0, Math.PI* 2);
+                context.fillStyle=c;
+                context.fill();
+                context.closePath();
+                
+            },
+            onclick:function(){
+                var self=this;
+                $("#canvas").on("click",function(){
+                    self.draw();
+                })
+            },
+            color:function(){
+                return "rgb("+this.random(0,255)+","+ this.random(0, 255)+","+ this.random(0, 255)+")";
+            },
+            random:function(min,max){
+                return  parseInt(Math.random()*(max-min)+min);
+            }
+          
+        }
+        const yzm=new Verify();
+    </script>
+</body>
+</html>
